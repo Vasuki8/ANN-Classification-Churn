@@ -46,17 +46,13 @@ input_data_df = pd.DataFrame([input_data])
 
 # Encode Gender
 input_data_df['Gender'] = label_encoder_gender.transform(input_data_df['Gender'])
-st.write(input_data_df)
 # One-hot encode Geography
 geo_encoded = onehot_encoder_geo.transform([[geography]])
 
 geo_columns = onehot_encoder_geo.get_feature_names_out()
 input_data_df[geo_columns] = geo_encoded
-st.write(input_data_df)
 # Scale features
 input_data_scaled = scaler.transform(input_data_df)
-st.write(input_data_scaled)
 # Make prediction
 prediction = model.predict(input_data_scaled)
-st.write(prediction[0])
 st.write(f"Prediction: {prediction[0][0]}")
