@@ -5,7 +5,7 @@ import tensorflow as tf
 import pickle
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
-model = tf.keras.models.load_model('model.keras')
+model = tf.keras.models.load_model('model.h5')
 
 with open('label_encoder_gender.pkl', 'rb') as file:
     label_encoder_gender = pickle.load(file)
@@ -46,16 +46,17 @@ input_data_df = pd.DataFrame([input_data])
 
 # Encode Gender
 input_data_df['Gender'] = label_encoder_gender.transform(input_data_df['Gender'])
-
+st.write(input_data_df)
 # One-hot encode Geography
 geo_encoded = onehot_encoder_geo.transform([[geography]])
 
 geo_columns = onehot_encoder_geo.get_feature_names_out()
 input_data_df[geo_columns] = geo_encoded
-
+st.write(input_data_df)
 # Scale features
 input_data_scaled = scaler.transform(input_data_df)
-
+st.write(input_data_scaled)
 # Make prediction
 prediction = model.predict(input_data_scaled)
+st.write(prediction[0])
 st.write(f"Prediction: {prediction[0][0]}")
